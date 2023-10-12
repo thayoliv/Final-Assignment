@@ -53,12 +53,12 @@ app.layout = html.Div(children=[html.H1('SpaceX Launch Records Dashboard',
                                 def get_pie_chart(entered_site):
                                 filtered_df = spacex_df
                                 if entered_site == 'ALL':
-                                    fig = px.pie(data, values='class', 
+                                    fig = px.pie(spacex_df, values='class', 
                                     names='pie chart names', 
                                     title='title')
                                     return fig
                                 else:
-                                    fig1 = px.pie(data, values='class', 
+                                    fig1 = px.pie(spacex_df, values='class', 
                                     names='pie chart names', 
                                     title='title')
                                     return fig1
@@ -71,16 +71,22 @@ app.layout = html.Div(children=[html.H1('SpaceX Launch Records Dashboard',
 
                                 
                                 # TASK 3: Add a slider to select payload range
-                                #dcc.RangeSlider(id='payload-slider',...)
+                                dcc.RangeSlider(id='payload-slider',
+                                                min = 0,
+                                                max = 10000,
+                                                step = 1000,
+                                                value = [min_payload, max_payload])
 
                                 # TASK 4: Add a scatter chart to show the correlation between payload and launch success
                                 html.Div(dcc.Graph(id='success-payload-scatter-chart')),
                                 ])
+                                    fig2 =px.scatter(
+                                            spacex_df, x="Payload Mass (kg)", y="class", 
+                                            color="size", facet_col="day"
+                                    )
 
-# TASK 2:
+
 # Add a callback function for `site-dropdown` as input, `success-pie-chart` as output
-
-# TASK 4:
 # Add a callback function for `site-dropdown` and `payload-slider` as inputs, `success-payload-scatter-chart` as output
 
 
